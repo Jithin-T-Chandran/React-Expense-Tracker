@@ -1,10 +1,13 @@
 import React, { useState, Fragment } from "react";
 import {Link,useNavigate,} from "react-router-dom";
-// import axios from "axios";
-// import Swal from "sweetalert2";
+import Footer from "../Layout/Footer";
+import Header from "../Layout/Header";
+import axios from "axios";
+import Swal from "sweetalert2";
+import {login} from "../../firebase/config";
+
 // import NavBar from "../Pages/NavBar";
 // import "./Login.css";
-// import Footer from "../Pages/Footer";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,31 +17,37 @@ function Login() {
   const submitHandler = async (event) => {
     try {
       event.preventDefault();
-    //   if (email && password) {
-    //     const response = await axios.post(
-    //       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBz6JqIjJGEQqp0WMZSfL5ZWMs9mfN-FFI",
-    //       { email, password }
-    //     );
-    //     localStorage.setItem("userid", response.data.localId);
-    //     if (response) {
-    //       Swal.fire("Good job!", "You have successfully Login!", "success");
-    //       navigate("/dashboard");
-    //     }
-    //   } else {
-    //     Swal.fire("Incomplete login details");
-    //   }
+      if (email && password) {
+        // const response = await axios.post(
+        //   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA4YTDaworBC3kZUm-28C11nrlmRFhObWY",
+        //   { email, password }
+        // );
+        const response = await login(email,password)
+      
+        
+        // localStorage.setItem("userid", response.data.localId);
+        if (response) {
+          Swal.fire("Good job!", "You have successfully Login!", "success");
+          navigate("/dashboard");
+        }
+
+
+      } else {
+        Swal.fire("Incomplete login details");
+      }
     console.log('Success');
     } catch (err) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: " Email not found!",
-    //   });
+      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: " Email not found!",
+      });
     }
   };
   return (
     <Fragment>
-      {/* <NavBar /> */}
+        <Header/>
       <div className="auth-wrapper">
         <div className="auth-inner">
           <form onSubmit={submitHandler}>
@@ -81,15 +90,15 @@ function Login() {
               </button>
             </div>
             <p className="forgot-password text-right">
-              Not registered?{" "}
-              <Link className="nav-link" to={"/signup"}>
-                SignUp?
+              Forgot password?{" "}
+              <Link className="nav-link" to={"/forgot-password"}>
+                Reset password?
               </Link>
             </p>
           </form>
         </div>
       </div>
-      {/* <Footer/> */}
+    <Footer/>
     </Fragment>
   );
 }

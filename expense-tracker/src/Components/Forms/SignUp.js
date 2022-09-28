@@ -3,11 +3,12 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
-// import axios from "axios";
-// import Swal from "sweetalert2";
-// import NavBar from "../Pages/NavBar";
+import Footer from "../Layout/Footer";
+import Header from "../Layout/Header";
+import axios from "axios";
+import Swal from "sweetalert2";
+import {signup} from "../../firebase/config";
 // import "./SignUp.css";
-// import Footer from "../Pages/Footer";
 
 function SignUp() {
 //   const [username, setUsername] = useState("");
@@ -19,41 +20,51 @@ function SignUp() {
   const navigate = useNavigate();
   const submitHandler = async (event) => {
     event.preventDefault();
-    // let body = {
-    //   email,
-    //   password,
-    // };
-    // try {
-    //   const reponse = await axios.post(
-    //     "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBz6JqIjJGEQqp0WMZSfL5ZWMs9mfN-FFI",
-    //     body
-    //   );
-    //   console.log(`Response:${reponse}`);
-    //   if (reponse) {
-    //     Swal.fire({
-    //       title: "User Successfulluy Signup",
-    //       showClass: {
-    //         popup: "animate__animated animate__fadeInDown",
-    //       },
-    //       hideClass: {
-    //         popup: "animate__animated animate__fadeOutUp",
-    //       },
-    //     });
-    //     navigate("/login");
-    //   }
-    // } catch (e) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "This User is Already exist!",
-    //   });
-    //   console.log("error", e);
-    // }
+    let body = {
+      email,
+      password,
+    };
+    try {
+
+
+      //await signup( email,password,);
+      // const reponse = await axios.post(
+      //   "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA4YTDaworBC3kZUm-28C11nrlmRFhObWY",
+      //   body
+      // );
+      const reponse = await signup(email,password)
+      console.log(`Response:${reponse}`);
+      if (reponse) {
+        Swal.fire({
+          title: "User Successfulluy Signup",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        navigate("/login");
+      }
+
+
+    } catch (e) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This User is Already exist!",
+      });
+      console.log("error", e);
+    }
+   if(password === confirmPassword){
     console.log(email,password);
+   }else{
+    console.log('password and confirm passworm must be same');
+   }
   };
   return (
     <Fragment>
-    {/* <NavBar/> */}
+    <Header/>
     <div className="auth-wrapper">
       <div className="auth-inner">
         <form onSubmit={submitHandler}>
@@ -96,13 +107,13 @@ function SignUp() {
           <p className="forgot-password text-right">
             Already registered{" "}
             <Link className="nav-link" to={"/login"}>
-              Login?
+              Already have an account?
             </Link>
           </p>
         </form>
       </div>
     </div>
-    {/* <Footer/> */}
+    <Footer/>
     </Fragment>
   );
 }
