@@ -1,17 +1,18 @@
 import React, { Fragment } from "react";
-import Swal from "sweetalert2";
 import {useNavigate,NavLink} from "react-router-dom";
-import {logout } from  "../../firebase/config";
-import {useAuth} from  "../../firebase/config";
+import { useUserAuth } from '../../Context/UserAuthContext';
+// import {logout } from  "../../firebase/config";
+// import {useAuth} from  "../../firebase/config";
 
 function NavBar() {
-    let history = useNavigate();
-    const currentUser = useAuth();
+  const navigate = useNavigate();
+  const {user,logOut} = useUserAuth();
     
     const handleLogout = async () => {
       try {
-        await logout();
+        await logOut();
         localStorage.clear();
+        navigate("/");
       } catch {
         alert("Error!");
       }
@@ -21,7 +22,7 @@ function NavBar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
      <div className="container">
        <NavLink className="navbar-brand" to={'/dashboard'}>
-        Welcome :  { currentUser?.email }
+        Welcome :   {user && user.email}
        </NavLink>
 
        <div className="d-flex align-items-center" id="navbarTogglerDemo02">

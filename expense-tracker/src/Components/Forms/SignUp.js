@@ -3,12 +3,14 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
-import axios from "axios";
 import Swal from "sweetalert2";
-import {signup} from "../../firebase/config";
+import { useUserAuth } from "../../Context/UserAuthContext";
+// import {signup} from "../../firebase/config";
 // import "./SignUp.css";
+
 
 function SignUp() {
 //   const [username, setUsername] = useState("");
@@ -17,9 +19,14 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [error, setError] = useState("");
+
+  const { signUp } = useUserAuth();
+
   const navigate = useNavigate();
   const submitHandler = async (event) => {
     event.preventDefault();
+    setError("");
     let body = {
       email,
       password,
@@ -32,7 +39,9 @@ function SignUp() {
       //   "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA4YTDaworBC3kZUm-28C11nrlmRFhObWY",
       //   body
       // );
-      const reponse = await signup(email,password)
+
+
+      const reponse = await signUp(email,password)
       console.log(`Response:${reponse}`);
       if (reponse) {
         Swal.fire({
@@ -44,17 +53,18 @@ function SignUp() {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-        navigate("/login");
+        navigate("/");
       }
 
 
-    } catch (e) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "This User is Already exist!",
-      });
-      console.log("error", e);
+    } catch (err) {
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "This User is Already exist!",
+      // });
+      // console.log("error", err);
+      setError(err.message);
     }
    if(password === confirmPassword){
     console.log(email,password);
@@ -69,6 +79,7 @@ function SignUp() {
       <div className="auth-inner">
         <form onSubmit={submitHandler}>
           <h3>Sign Up</h3>
+          {error && <Alert variant="danger">{error}</Alert>}
           <div className="mb-3">
             <label>Email address</label>
             <input
@@ -106,7 +117,7 @@ function SignUp() {
           </div>
           <p className="forgot-password text-right">
             Already registered{" "}
-            <Link className="nav-link" to={"/login"}>
+            <Link className="nav-link" to={"/"}>
               Already have an account?
             </Link>
           </p>

@@ -13,28 +13,29 @@ const firebaseConfig = {
     measurementId: "G-CVSFSF1450"
   };
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
+  export const auth = getAuth(app);
+  export default app;
 
-  export function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
-  }
-  export function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
-  }
-  export function resetEmail(email) {
-    return sendPasswordResetEmail(auth, email);
-  }
-  export function logout() {
-    return signOut(auth);
-  }
-  export function useAuth() {
-    const [ currentUser, setCurrentUser ] = useState();
+  // export function signup(email, password) {
+  //   return createUserWithEmailAndPassword(auth, email, password);
+  // }
+  // export function login(email, password) {
+  //   return signInWithEmailAndPassword(auth, email, password);
+  // }
+  // export function resetEmail(email) {
+  //   return sendPasswordResetEmail(auth, email);
+  // }
+  // export function logout() {
+  //   return signOut(auth);
+  // }
+  // export function useAuth() {
+  //   const [ currentUser, setCurrentUser ] = useState();
   
-    useEffect(() => {
-      const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
-      return unsub;
-    }, [])
+  //   useEffect(() => {
+  //     const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
+  //     return unsub;
+  //   }, [])
   
-    return currentUser;
-  }
+  //   return currentUser;
+  // }
   export const db = getFirestore(app);

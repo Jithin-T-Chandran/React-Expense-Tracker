@@ -6,6 +6,8 @@ import SignUp from "./Components/Forms/SignUp";
 import Login from "./Components/Forms/Login";
 import Dashboard from "./Components/Layout/Dashboard";
 import ForgotPassword from "./Components/Forms/ForgotPassword";
+import ProtectedRoute from "./Components/Layout/ProtectedRoute";
+import { UserAuthContextProvider } from "./Context/UserAuthContext";
 
 // import Dashboard from "./Components/Pages/Dashboard";
 // import About from "./Components/Pages/About";
@@ -14,16 +16,17 @@ import ForgotPassword from "./Components/Forms/ForgotPassword";
 function App() {
   return (
     <Router>
-    <Routes>
-      <Route exact path="/" element={<Login />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/dashboard" element={<Dashboard/>} />
-      <Route path="/forgot-password" element={<ForgotPassword/>} />
-     {/*  {<Route path="/about" element={<About/>} />
-      <Route path="/home" element={<Home/>} />
-      <Route path="/contactus" element={<ContactUs/>} /> */}
-    </Routes>
+      <UserAuthContextProvider>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/dashboard" element={ <ProtectedRoute><Dashboard/></ProtectedRoute>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+        {/*  {<Route path="/about" element={<About/>} />
+          <Route path="/home" element={<Home/>} />
+          <Route path="/contactus" element={<ContactUs/>} /> */}
+        </Routes>
+    </UserAuthContextProvider>
   </Router>
   );
 }

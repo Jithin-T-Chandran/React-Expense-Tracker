@@ -11,7 +11,7 @@ function Header() {
       <div className="d-flex align-items-center" id="navbarTogglerDemo02">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <NavLink className="nav-link" to={'/login'}>
+            <NavLink className="nav-link" to={'/'}>
               Login
             </NavLink>
           </li>
