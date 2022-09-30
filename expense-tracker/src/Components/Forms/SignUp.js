@@ -8,8 +8,7 @@ import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import Swal from "sweetalert2";
 import { useUserAuth } from "../../Context/UserAuthContext";
-// import {signup} from "../../firebase/config";
-// import "./SignUp.css";
+
 
 
 function SignUp() {
@@ -27,20 +26,7 @@ function SignUp() {
   const submitHandler = async (event) => {
     event.preventDefault();
     setError("");
-    let body = {
-      email,
-      password,
-    };
     try {
-
-
-      //await signup( email,password,);
-      // const reponse = await axios.post(
-      //   "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA4YTDaworBC3kZUm-28C11nrlmRFhObWY",
-      //   body
-      // );
-
-
       const reponse = await signUp(email,password)
       console.log(`Response:${reponse}`);
       if (reponse) {
@@ -58,12 +44,6 @@ function SignUp() {
 
 
     } catch (err) {
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: "This User is Already exist!",
-      // });
-      // console.log("error", err);
       setError(err.message);
     }
    if(password === confirmPassword){

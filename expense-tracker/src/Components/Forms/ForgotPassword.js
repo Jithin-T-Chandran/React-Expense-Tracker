@@ -2,7 +2,6 @@ import React, { useState, Fragment } from "react";
 import {Link,useNavigate,} from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useUserAuth } from "../../Context/UserAuthContext";
 
@@ -16,12 +15,10 @@ function ForgotPassword() {
         event.preventDefault();
             const response = await resetPassword(email)
             console.log("reset response",response);
-            // if (response) {
-            //   Swal.fire("Good job!", "Reset Email sent", "success");
-            //   navigate("/");
-            // }
-
-        
+            if (response) {
+              Swal.fire("Good job!", "Reset Email sent", "success");
+              navigate("/");
+            }
       } catch (err) {
         console.log(err);
       }

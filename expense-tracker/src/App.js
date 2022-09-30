@@ -9,10 +9,6 @@ import ForgotPassword from "./Components/Forms/ForgotPassword";
 import ProtectedRoute from "./Components/Layout/ProtectedRoute";
 import { UserAuthContextProvider } from "./Context/UserAuthContext";
 
-// import Dashboard from "./Components/Pages/Dashboard";
-// import About from "./Components/Pages/About";
-// import Home from "./Components/Pages/Home";
-// import ContactUs from "./Components/Forms/ContactUs";
 function App() {
   return (
     <Router>
@@ -22,9 +18,6 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={ <ProtectedRoute><Dashboard/></ProtectedRoute>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
-        {/*  {<Route path="/about" element={<About/>} />
-          <Route path="/home" element={<Home/>} />
-          <Route path="/contactus" element={<ContactUs/>} /> */}
         </Routes>
     </UserAuthContextProvider>
   </Router>

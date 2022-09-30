@@ -6,10 +6,6 @@ import Swal from "sweetalert2";
 import { useUserAuth } from "../../Context/UserAuthContext";
 import { Alert } from "react-bootstrap";
 import GoogleButton from "react-google-button";
-// import {login} from "../../firebase/config";
-
-// import NavBar from "../Pages/NavBar";
-// import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -37,12 +33,12 @@ function Login() {
         Swal.fire("Incomplete login details");
       }
     } catch (err) {
-      // console.log(err);
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: " Email not found!",
-      // });
+      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: " Email not found!",
+      });
       setError(err.message);
     }
   };
