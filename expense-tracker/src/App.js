@@ -19,7 +19,7 @@ function App() {
           <Route path="/dashboard" element={ <ProtectedRoute><Dashboard/></ProtectedRoute>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
         </Routes>
-    </UserAuthContextProvider>
+      </UserAuthContextProvider>
   </Router>
   );
 }

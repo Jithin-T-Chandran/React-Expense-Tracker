@@ -14,32 +14,36 @@ function Login() {
   const [error, setError] = useState("");
 
   const { logIn, googleSignIn } = useUserAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const submitHandler = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
     try {
-      event.preventDefault();
       if (email && password) {
         setError("");
 
         const response = await logIn(email, password);
-
         // localStorage.setItem("userid", response.data.localId);
         if (response) {
           Swal.fire("Good job!", "You have successfully Login!", "success");
+          setIsLoading(false);
           navigate("/dashboard");
         }
       } else {
         Swal.fire("Incomplete login details");
+        setIsLoading(false);
       }
     } catch (err) {
       console.log(err);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: " Email not found!",
+        text: "Something went wrong !",
       });
       setError(err.message);
+      setIsLoading(false);
     }
   };
 
@@ -101,7 +105,7 @@ function Login() {
             </div>
             <div className="d-grid">
               <button type="submit" className="btn btn-primary">
-                Submit
+              {!isLoading ? 'login' : 'Sending request...'}
               </button>
             </div>
             <p className="forgot-password text-right">

@@ -21,11 +21,13 @@ function SignUp() {
   const [error, setError] = useState("");
 
   const { signUp } = useUserAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const submitHandler = async (event) => {
     event.preventDefault();
     setError("");
+    setIsLoading(true);
     try {
       const reponse = await signUp(email,password)
       console.log(`Response:${reponse}`);
@@ -39,12 +41,14 @@ function SignUp() {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
+        setIsLoading(false);
         navigate("/");
       }
 
 
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
    if(password === confirmPassword){
     console.log(email,password);
@@ -92,7 +96,7 @@ function SignUp() {
           </div>
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">
-              Sign Up
+            {!isLoading ? 'Sign up' : 'Sending request...'}
             </button>
           </div>
           <p className="forgot-password text-right">
